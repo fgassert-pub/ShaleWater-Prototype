@@ -1,0 +1,384 @@
+<!--
+
+    Author: Tianyi Luo
+
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+        <title>AQUEDUCT SHALE BETA</title>
+        
+        <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
+        <script type="text/javascript" src="http://b.scorecardresearch.com/beacon.js"></script>
+        <script type="text/javascript" src="shale_basin.js"></script>
+        <script type="text/javascript" src="shale_play.js"></script>
+        <script type="text/javascript" src="l.control.geosearch.js"></script>
+        <script type="text/javascript" src="l.geosearch.provider.openstreetmap.js"></script>
+        <!--<script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>-->
+        <link href='l.geosearch.css' rel='stylesheet'>
+        <link href='leaflet.css' rel='stylesheet'>
+        <!--<<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />-->
+        
+        <style>
+            body {
+                margin:0;
+                padding:0;
+            }
+            .popup_chart div{
+                font: 10px sans-serif;
+                background-color: steelblue;
+                text-align: right;
+                padding: 3px;
+                margin: 1px;
+                color: white;
+                }
+            #wri_banner_upper {
+                position: absolute;
+                top: 0;
+                width: 100%;
+                height: 12px;
+                background-color: black;
+            }
+            #wri_banner_middle {
+                position: absolute;
+                top: 12px;
+                width: 100%;
+                height: 26px;
+                background-color: black;
+            }
+            #wri_banner_lower {
+                position: absolute;
+                top: 38px;
+                width: 100%;
+                height: 12px;
+                background-color: black;
+            }
+            #wri_banner {
+                position: absolute;
+                top: 12px;
+                left: 0;
+                width: 100%;
+                height: 26px;
+                background-color: black;
+            }
+            #wri_banner_blog_button {
+                position: absolute;
+                top: 0px;
+                left: 343px;
+                width: 80px;
+                height: 50px;
+                text-align: center;
+                vertical-align: middle;
+            }
+            #wri_banner_data_button {
+                position: absolute;
+                top: 0px;
+                left: 423px;
+                width: 80px;
+                height: 50px;
+                text-align: center;
+                vertical-align: middle;
+            }
+            #wri_banner_contact_button {
+                position: absolute;
+                top: 0px;
+                left: 503px;
+                width: 120px;
+                height: 50px;
+                text-align: center;
+                vertical-align: middle;
+            }
+            #map {
+                position:absolute;
+                top:50px;
+                bottom:0px;
+                width:100%;
+            }
+            .info {
+                padding: 6px 8px;
+                font: 14px/16px Arial, Helvetica, san-serif;
+                background: rgba(255,255,255,0.9);
+                box-shadow: 0 0 16px rgba(0,0,0,0.2);
+                border-radius: 4px;
+            }
+            .info h3 {
+                margin: 0 0 0;
+                color: #000;
+            }
+            .info h4 {
+                margin: 0 0 4px;
+                color: #000;
+            }
+            .legend {
+                text-align: left;
+                line-height: 14px;
+                color: #555;
+                background-image: url();
+                opacity: 0.9;
+            }
+            .legend i {
+                width: 14px;
+                height: 14px;
+                float: left;
+                margin-right: 6px;
+                opacity: 1;
+            }
+            #popup_chart {
+                font: 10px sans-serif;
+                background-color: steelblue;
+                text-align: right;
+                padding: 3px;
+                margin: 1px;
+                color: white;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div id='wri_banner_upper'></div>
+        <div id='wri_banner'>
+            <a href='http://www.wri.org'>
+                <img src="WRI_logo_horiz_4c.png"
+                     alt="WRI_logo"
+                     height="26px"
+                     hspace="12px"
+                     title="Click to visit WRI main site"></a>
+        </div>
+        <div id='wri_banner_lower'></div>
+        <div id='wri_banner_blog_button'>
+            <a href="http://www.wri.org" style="text-decoration:none">
+            <p><font face="Arial" size="4" color="white"
+                     onmouseover="this.color='#f0ab00'"
+                     onmouseout="this.color='white'"
+            ><b>BLOG</b></font></p></a>
+        </div>
+        <div id='wri_banner_data_button'>
+            <a href="http://www.wri.org" style="text-decoration:none">
+            <p><font face="Arial" size="4" color="white"
+                     onmouseover="this.color='#f0ab00'"
+                     onmouseout="this.color='white'"
+            ><b>DATA</b></font></p></a>
+        </div>
+        <div id='wri_banner_contact_button'>
+            <a href="http://www.wri.org" style="text-decoration:none">
+            <p><font face="Arial" size="4" color="white"
+                     onmouseover="this.color='#f0ab00'"
+                     onmouseout="this.color='white'"
+            ><b>CONTACT</b></font></p></a>
+        </div>
+        <div id='map'></div>
+            <script>
+            var bws_basemap = 'https://{s}.tiles.mapbox.com/v3/tluo.r3ipy14i/{z}/{x}/{y}.png';
+            var mapbox_basemap = 'https://api.tiles.mapbox.com/v3/examples.map-i875kd35/{z}/{x}/{y}.png';
+            var shale_basin;
+            var shale_play;
+            
+            function style_play(feature) {
+                return {
+                    weight:1,
+                    opacity:1,
+                    color:'#2E1700',
+                    fillOpacity:0.6,
+                    fillColor: '#391D00'
+                };
+            }
+            function highlightFeature_play(e) {
+                var layer = e.target;
+                layer.setStyle({
+                    weight: 1.5,
+                    color: '#ffd700',
+                    dashArray: '',
+                    fillOpacity: 0.7
+                });
+                //if (!L.Browser.ie && !L.Browser.opera) {
+                //    layer.bringToFront();
+               // }
+            }
+            function resetHighlight_play(e) {
+                shale_play.resetStyle(e.target);
+            }
+            
+            function style_basin(feature) {
+                return {
+                    weight:1,
+                    opacity:1,
+                    color:'#333333',
+                    fillOpacity:0.6,
+                    fillColor: '#666666'
+                };
+            }
+            function highlightFeature_basin(e) {
+                var layer = e.target;
+                layer.setStyle({
+                    weight: 1.5,
+                    color: 'black',
+                    dashArray: '',
+                    fillOpacity: 0.7
+                });
+                if (!L.Browser.ie && !L.Browser.opera) {
+                    layer.bringToBack();
+                }
+            }
+            function resetHighlight_basin(e) {
+                shale_basin.resetStyle(e.target);
+            }
+            
+            function onEachFeature_basin(feature,layer) {
+                layer.on({
+                    mouseover: highlightFeature_basin,
+                    mouseout: resetHighlight_basin
+                });
+                layer.bindPopup(
+                                "<font size='1' color='#777777'>Basin Name</font><br>" +
+                                "<b>" + feature.properties.Basin_Name + "</b><br>" +
+                                "<font size='1' color='#777777'>Country</font><br>" +
+                                "<b>" + feature.properties.Country + "</b>"
+                );
+            }
+            
+            function onEachFeature_play(feature,layer) {
+                layer.on({
+                    mouseover: highlightFeature_play,
+                    mouseout: resetHighlight_play
+                });
+                layer.bindPopup(
+                                // table
+                                /* "<table><tr><th><font size='1' color='#777777'>Play Name</font><br></th><tr/><tr><th><b>" + feature.properties.Basin_Name + "</b></th><tr/></table>" */
+                                
+                                "<font size='1' color='#777777'>Play Name</font><br>" +
+                                "<b>" + feature.properties.Basin_Name + "</b><br>" +
+                                "<font size='1' color='#777777'>Country</font><br>" +
+                                "<b>" + feature.properties.Country + "</b><br>" +
+                                "<font size='1' color='#777777'>Formation</font><br>" +
+                                "<b>" + feature.properties.Shale_Form + "</b><br>" +
+                                "<font size='1' color='#777777'>Geologic Age</font><br>" +
+                                "<b>" + feature.properties.Geologic_A + "</b><br>"           /*+
+                                "<font size='1' color='#777777'>TRR &#40trillion m<sup>3</sup>&#41</font><br>" +
+                                "<b>" + feature.properties.Prospectiv + "</b><br>"//<br>" +  */
+                                
+                                // form
+                                //+ "<form action='http://www.wri.org/' method='post'>"
+                                //+ "<div>"
+                                //+ "<label for='qty-1'>Quantity</label>"
+                                //+ "<input type='text' name='qty-1' id='qty-1' value='1'/>"
+                                //+ "</div>"
+                                //+ "<p><input type='submit' value='Add to cart' /></p>"
+                                //+ "</form>"
+                                
+                                
+                                //image
+                                //"<img src='http://euroasianews.com/wp-content/uploads/china-shale-gas.jpg' alt='WRI_logo' height='100px' title='Click to visit WRI main site'>"
+                                
+                                // charts
+                                //+ "<br>"
+                                //+ "<div class='popup_chart'>"
+                                //+ "<div style='width: 4px;'>4</div>"
+                                //+ "<div style='width: 8px;'>8</div>"
+                                //+ "<div style='width: 15px;'>15</div>"
+                                //+ "<div style='width: 16px;'>16</div>"
+                                //+ "<div style='width: 23px;'>23</div>"
+                                //+ "<div style='width: 42px;'>42</div>"
+                                //+ "</div>"
+                                
+                );
+            }
+            
+            shale_play = L.geoJson(shale_play,{
+                onEachFeature: onEachFeature_play,
+                style: style_play
+            });
+            shale_basin = L.geoJson(shale_basin,{
+                onEachFeature: onEachFeature_basin,
+                style: style_basin
+            });
+            
+            
+            var map = L.map('map',{keyboard: false}).setView([16, 10], 3);
+            
+            /* Search Bar
+            new L.Control.GeoSearch({
+                provider: new L.GeoSearch.Provider.OpenStreetMap(),
+                position: 'topcenter',
+                showMarker: false
+            }).addTo(map);
+            */
+            
+                L.control.layers({
+                    'Water Stress': L.tileLayer(bws_basemap,{maxZoom:6, minZoom:1}).addTo(map),
+                    'Admin Area': L.tileLayer(mapbox_basemap)
+                },{
+                    'Shale Basin': shale_basin.addTo(map),
+                    'Shale Play': shale_play.addTo(map)
+                },{
+                    position: 'topright'
+                },{
+                    autoZIndex: true
+                    })
+                .addTo(map);
+                
+            
+            /* // previous code
+            var map = L.map('map').setView([0, 0], 2);
+                L.tileLayer(bws_basemap,{
+                    detectRetina: true}).addTo(map);
+                L.tileLayer(
+                    mapbox_basemap,{
+                        detectRetina: true
+                    }
+                ).addTo(map);
+            */
+            var info = L.control({position: 'bottomleft'});
+                info.onAdd = function(map) {
+                    this._div = L.DomUtil.create('div','info');
+                    this._div.innerHTML = '<h3>Global Shale Gas and Water Risk</h3>';
+                    return this._div
+                };
+                //info.addTo(map);
+            var legend = L.control({position: 'bottomright'});
+                legend.onAdd = function(map){
+                    var div = L.DomUtil.create('div','info legend'),
+                        labels = ['Low',
+                                  'Low to medium',
+                                  'Medium to high',
+                                  'High',
+                                  'Extremely high',
+                                  'Arid & Low water use',
+                                  'No data'],
+                        colors = ['rgb(255,255,153)',
+                                  'rgb(255,230,0)',
+                                  'rgb(255,153,0)',
+                                  'rgb(255,25,0)',
+                                  'rgb(204,0,20)',
+                                  'rgb(204,204,204)',
+                                  'rgb(128,128,115)'],
+                        labels_f = [];
+                    for (var i = 0; i < labels.length; i++) {
+                        labels_f.push(
+                            '<i style = "background:' + colors[i] + '"></i>' + labels[i]
+                        );
+                    }
+                    div.innerHTML = '<h4>Water Stress Level</h4>'
+                                    + labels_f.join('<br>')
+                                    +'<br>'
+                                    +'<br>'
+                                    +'<h4>Shale Gas Resources</h4>'
+                                    + '<i style = "background: #522900"></i>Shale Play'
+                                    + '<br>'
+                                    + '<i style = "background: #666666"></i>Shale Basin'
+                                    + '<br>'
+                                    + '<br>'
+                                    + '<a href="http://www.wri.org/our-work/project/aqueduct"><font size="1">Click to learn more</font></a>';
+                    return div;
+                };
+                legend.addTo(map);
+            
+            L.control.scale().addTo(map);
+                
+            map.attributionControl
+            .addAttribution('<a href="http://www.mapbox.com"> Mapbox</a> | Data Sources <a href="http://www.wri.org"> &copy World Resources Institute</a> | Developer <a href="http://www.wri.org/profile/tianyi-luo"> Tianyi Luo</a>');
+        </script>
+    </body>
+</html>
