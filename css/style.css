@@ -68,14 +68,17 @@ hr {
   font-weight: bold;
 }
 #ra-nav a:active,
-#ra-nav a:hover,
 #ra-nav a:link,
 #ra-nav a:visited {
   color: #fff;
   text-decoration: none;
 }
+#ra-nav a:hover {
+  color: #f0ab00;
+  text-decoration: none;
+}
 .ra-large .nav-left {
-  float: left;
+  float: right;
   padding: 0.25em 1em;
 }
 .ra-small #ra-nav {
