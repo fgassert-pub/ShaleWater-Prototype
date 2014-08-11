@@ -63,19 +63,22 @@ hr {
   height: 44px;
 }
 #ra-nav {
-  background: #09c;
+  background: #000;
   color: #fff;
   font-weight: bold;
 }
 #ra-nav a:active,
-#ra-nav a:hover,
 #ra-nav a:link,
 #ra-nav a:visited {
   color: #fff;
   text-decoration: none;
 }
+#ra-nav a:hover {
+  color: #f0ab00;
+  text-decoration: none;
+}
 .ra-large .nav-left {
-  float: left;
+  float: right;
   padding: 0.25em 1em;
 }
 .ra-small #ra-nav {
@@ -87,7 +90,7 @@ hr {
   padding: 0.25em 1em;
 }
 #ra-responsivemenu {
-  background: #09c;
+  background: #000;
 }
 #ra-responsivemenu-btn-l {
   border-right: rgba(0,0,0,0.3) 1px solid;
