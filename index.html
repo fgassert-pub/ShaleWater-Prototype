@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Responsive App</title>
+  <meta charset='UTF-8'/>
+  <meta name='viewport' content='width=device-width,initial-scale=1' />
+  <link href='css/ra.css' rel='stylesheet' />
+  <link href='css/style.css' rel='stylesheet' />
+  <!--[if IE]>
+    <script src='js/classList.js'></script>
+    <![endif]-->
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+</head>
+<body>
+    <div id='ra-container' class='ra-large'>
+      <div id='ra-headmatter' class='clearfix'>
+	<div class='ra-hidewhensmall'>
+	  <!--Place header content here-->
+	  <div class='header clearfix'>
+	    <h1>Water for Shale
+	      <a href="http://wri.org">
+		<span class='logo-right logo-right-wri4c'
+		      title="Click to visit WRI main site" />
+	      </a>
+	    </h1>
+	  </div>
+	  <!--End header content-->
+	</div>
+	<div id='ra-responsivemenu' class='ra-hidewhenlarge clearfix'>
+	  <div id='ra-responsivemenu-btn' class='ra-btn'></div>
+	  <!--Place small screen header html here-->
+	  <a href="http://wri.org" >
+	    <span class='logo-right logo-right-wrismblack'
+		  style='opacity:.4'
+		  title="Click to visit WRI main site" />
+	  </a>
+	  <!--End small screen header html-->
+	</div>
+	<div id='ra-nav'>
+	  <div id='ra-nav-container'>
+	    <!--Place navigation html here-->
+	    <a href='#' >
+	      <h3 class='nav-left'>Contact</h3>
+	    </a>
+	    <a href='#' >
+	      <h3 class='nav-left'>Water Risk Atlas</h3>
+	    </a>
+	    <a href='#' >
+	      <h3 class='nav-left'>Data</h3>
+	    </a>
+	    <a href='#' >
+	      <h3 class='nav-left'>Report</h3>
+	    </a>
+	    <a href='#' >
+	      <h3 class='nav-left'>About</h3>
+	    </a>
+	    <!--End navigation html-->
+	  </div>
+	</div>
+      </div>
+      <div id='ra-main'>
+	<!--Place main content here-->
+	<div id='map'></div>
+	<!--End main content-->
+      </div>
+      <div id='ra-panel'>
+	<div id='ra-panel-content'>
+	  <!--Place panel content here-->
+	  <!--End panel content-->
+	</div>
+      </div>
+      <div id='ra-cover' class='ra-hidden'></div>
+    </div>
+    <!--Initialize responsive app framework-->
+    <script src='js/ra.js'></script>
+    <script>ra = new ra({});</script>
+    <!--Initialize application-->
+    <script src='js/app.js'></script>
+</body>
+</html>

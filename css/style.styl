@@ -1,0 +1,117 @@
+/* 
+ * Default styles 
+ * Edit this file to change styling
+ */
+
+/* css transitions */
+#ra-container
+  transition transform .25s
+  -webkit-transition -webkit-transform .25s
+.ra-large #ra-main
+  transition left .25s, max-width .25s
+  -webkit-transition left .25s, max-width .25s
+#ra-nav
+  transition max-height .25s
+  -webkit-transition max-height .25s
+/* your styles here */
+
+/* #ra-container has .ra-small .ra-large or .ra-fullscreen classes
+ * depending on app state
+ * this can be very useful for styling
+ */
+
+$color = #0099cc
+
+html, body
+  font-family 'Helvetica Neue', Helvetica, Arial, sans-serif
+  font-size 15px
+h1
+  font-size 1.5em
+  line-height 1.5em
+h2
+  font-size 1.2em
+  line-height 1.2em
+h3
+  font-size 1em
+  line-height 1em
+hr
+  border none
+  margin 1em 0
+  height 1px
+  background #999999
+
+.header
+  padding 0 .5em
+.logo-right
+  float right
+  vertical-align middle
+.logo-right-wri4c
+  background url('../img/wri_logo.png') center no-repeat
+  background -webkit-image-set(url('../img/wri_logo.png') 1x,url('../img/wri_logo@2x.png') 2x)
+  width 375px
+  height 31px
+.logo-right-wrismblack
+  background url('../img/WRI_sm_black.png') center no-repeat
+  background -webkit-image-set(url('../img/WRI_sm_black.png') 1x,url('../img/WRI_sm_black@2x.png') 2x)
+  width 44px
+  height 44px
+
+#ra-nav
+  background $color
+  color #fff
+  font-weight bold
+  a:active, a:hover, a:link, a:visited
+    color #fff
+    text-decoration none
+
+    
+.ra-large .nav-left
+  float left
+  padding .25em 1em
+.ra-small 
+  #ra-nav
+    -moz-box-shadow   inset 0px 3px 2px -2px rgba(0,0,0,0.20)
+    box-shadow        inset 0px 3px 2px -2px rgba(0,0,0,0.20)
+  .nav-left
+    width auto
+    padding .25em 1em
+
+  
+
+#ra-responsivemenu
+  background $color
+#ra-responsivemenu-btn-l
+  border-right rgba(0,0,0,.3) 1px solid
+
+
+#map
+  width 100%
+  height 100%
+  background #333
+
+// legend and popup styling
+.info
+  padding: 6px 8px
+  font: 14px/16px Arial, Helvetica, sans-serif
+  background: rgba(255,255,255,0.9)
+  box-shadow: 0 0 16px rgba(0,0,0,0.2)
+  border-radius: 4px
+  h3 
+    margin: 0 0 0;
+    color: #000;
+
+  h4
+    margin: 0 0 4px;
+    color: #000;
+
+.legend
+  text-align: left;
+  line-height: 14px;
+  color: #555;
+  opacity: 0.9;
+  i
+    width: 14px;
+    height: 14px;
+    float: left;
+    margin-right: 6px;
+    opacity: 1;
