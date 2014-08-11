@@ -2,15 +2,15 @@
 (function (window, document) {
     'use strict'
     
-    var shaleUrl = 'http://services.natcarbviewer.org/arcgis/rest/services/Unconventional_Resources/Unconventional_Resources/MapServer/'
-    var aqueductUrl = 'http://gis.wri.org/arcgis/rest/services/Aqueduct/aqueduct_global_2014/MapServer'
+    var 
 
-    var bws_basemap = 'https://{s}.tiles.mapbox.com/v3/tluo.r3ipy14i/{z}/{x}/{y}.png';
-    var mapbox_basemap = 'https://api.tiles.mapbox.com/v3/examples.map-i875kd35/{z}/{x}/{y}.png';
-    var shale_basin;
-    var shale_play;
+    shaleUrl = 'http://services.natcarbviewer.org/arcgis/rest/services/Unconventional_Resources/Unconventional_Resources/MapServer/',
+    aqueductUrl = 'http://gis.wri.org/arcgis/rest/services/Aqueduct/aqueduct_global_2014/MapServer',
+    wriTiles = "http://data.wri.org/tiles/{styleId}/{z}/{x}/{y}.png",
+    base = 'http://',
+    labels = 'http://',
 
-    function style_play(feature) {
+    style_play = function(feature) {
 	return {
             weight:1,
             opacity:1,
@@ -18,21 +18,22 @@
             fillOpacity:0.6,
             fillColor: '#391D00'
 	};
-    }
-    function highlightFeature_play(e) {
+    },
+    highlightFeature_play = function(e) {
 	var layer = e.target;
 	layer.setStyle({
             weight: 1.5,
             color: '#ffd700',
-            dashArray: '',
             fillOpacity: 0.7
 	});
-    }
-    function resetHighlight_play(e) {
+	if (!L.Browser.ie && !L.Browser.opera) {
+            layer.bringToBack();
+	};
+    },
+    resetHighlight_play = function(e) {
 	shale_play.resetStyle(e.target);
-    }
-
-    function style_basin(feature) {
+    },
+    style_basin = function(feature) {
 	return {
             weight:1,
             opacity:1,
@@ -40,37 +41,33 @@
             fillOpacity:0.6,
             fillColor: '#666666'
 	};
-    }
-    function highlightFeature_basin(e) {
+    },
+    highlightFeature_basin = function(e) {
 	var layer = e.target;
 	layer.setStyle({
             weight: 1.5,
             color: 'black',
-            dashArray: '',
             fillOpacity: 0.7
 	});
 	if (!L.Browser.ie && !L.Browser.opera) {
             layer.bringToBack();
-	}
-    }
-    function resetHighlight_basin(e) {
+	};
+    },
+    resetHighlight_basin = function(e) {
 	shale_basin.resetStyle(e.target);
-    }
-
-    function onEachFeature_basin(feature,layer) {
+    },
+    onEachFeature_basin = function(feature,layer) {
 	layer.on({
             mouseover: highlightFeature_basin,
             mouseout: resetHighlight_basin
 	});
-	layer.bindPopup(
-            "<font size='1' color='#777777'>Basin Name</font><br>" +
-		"<b>" + feature.properties.Basin_Name + "</b><br>" +
-		"<font size='1' color='#777777'>Country</font><br>" +
-		"<b>" + feature.properties.Country + "</b>"
+	layer.bindPopup("Basin Name<br>" +
+			"<b>" + feature.properties.Basin_Name + "</b><br>" +
+			"Country<br>" +
+			"<b>" + feature.properties.Country + "</b>"
 	);
-    }
-
-    function onEachFeature_play(feature,layer) {
+    },
+    onEachFeature_play = function(feature,layer) {
 	layer.on({
             mouseover: highlightFeature_play,
             mouseout: resetHighlight_play
@@ -86,32 +83,36 @@
 		"<font size='1' color='#777777'>Geologic Age</font><br>" +
 		"<b>" + feature.properties.Geologic_A + "</b><br>"                   
 	);
-    }
+    },
 
-    shale_play = L.geoJson(shale_play,{
+    shale_play = L.esri.dynamicMapLayer(shaleUrl,{
+	opacity:.8,
 	onEachFeature: onEachFeature_play,
 	style: style_play
-    });
+    }),
     shale_basin = L.geoJson(shale_basin,{
 	onEachFeature: onEachFeature_basin,
 	style: style_basin
-    });
+    }),
 
 
-    var map = L.map('map',{keyboard: false}).setView([16, 10], 3);
+    map = L.map('map',{keyboard: false}).setView([16, 10], 3);
 
-    L.control.layers({
-	'Water Stress': L.tileLayer(bws_basemap,{maxZoom:6, minZoom:1}).addTo(map),
-	'Admin Area': L.tileLayer(mapbox_basemap)
-    },{
+    var retina = window.devicePixelRatio > 1.4,
+    ret = retina ? "bm8/iabels-retina" : "bm8/labels";
+    L.tileLayer(wriTiles, {styleId: "bm8/base", detectRetina: true}).addTo(map);
+    L.tileLayer.wms("http://gis.wri.org/arcgis/services/Aqueduct/aqueduct_global/MapServer/WmsServer",{layers:'1',transparent:true,format:'image/png32',detectRetina:true}).addTo(map);
+    L.tileLayer(wriTiles, {styleId: ret, detectRetina: true}).addTo(map);
+
+
+    L.control.layers({},{
 	'Shale Basin': shale_basin.addTo(map),
 	'Shale Play': shale_play.addTo(map)
     },{
 	position: 'topright'
     },{
 	autoZIndex: true
-    })
-	.addTo(map);
+    }).addTo(map);
 
 
     var info = L.control({position: 'bottomleft'});
