@@ -1,10 +1,14 @@
 
 (function (window, document) {
-    'use strict'
+    'use strict';
     
     var 
 
-    shaleUrl = 'http://services.natcarbviewer.org/arcgis/rest/services/Unconventional_Resources/Unconventional_Resources/MapServer/',
+    toGeoJson = esriConverter(),
+    
+    shalePlayUrl = "http://services.natcarbviewer.org/arcgis/rest/services/Unconventional_Resources/Unconventional_Resources/MapServer/3/query?geometry=[[-90,-180],[90,180]]&outFields=*&returnGeometry=true&geometryPrecision=5&outSR=4326&f=json",
+    shaleBasinUrl = "http://services.natcarbviewer.org/arcgis/rest/services/Unconventional_Resources/Unconventional_Resources/MapServer/4/query?geometry=[[-90,-180],[90,180]]&outFields=*&returnGeometry=true&geometryPrecision=5&outSR=4326&f=json",
+
     aqueductUrl = 'http://gis.wri.org/arcgis/rest/services/Aqueduct/aqueduct_global_2014/MapServer',
     wriTiles = "http://data.wri.org/tiles/{styleId}/{z}/{x}/{y}.png",
     base = 'http://',
@@ -79,31 +83,43 @@
 		"<font size='1' color='#777777'>Country</font><br>" +
 		"<b>" + feature.properties.Country + "</b><br>" +
 		"<font size='1' color='#777777'>Formation</font><br>" +
-		"<b>" + feature.properties.Shale_Form + "</b><br>" +
+		"<b>" + feature.properties.Shale_Formation + "</b><br>" +
 		"<font size='1' color='#777777'>Geologic Age</font><br>" +
-		"<b>" + feature.properties.Geologic_A + "</b><br>"                   
+		"<b>" + feature.properties.Geologic_Age + "</b><br>"                   
 	);
     },
+    
 
-    shale_play = L.esri.dynamicMapLayer(shaleUrl,{
-	opacity:.8,
-	onEachFeature: onEachFeature_play,
-	style: style_play
+    shale_play = L.geoJson('',{
+	style:style_play,
+	onEachFeature:onEachFeature_play
     }),
-    shale_basin = L.geoJson(shale_basin,{
-	onEachFeature: onEachFeature_basin,
-	style: style_basin
+    shale_basin = L.geoJson('',{
+	style:style_basin,
+	onEachFeature:onEachFeature_basin
     }),
-
-
+    
+    
     map = L.map('map',{keyboard: false}).setView([16, 10], 3);
+    
+    corslite(shalePlayUrl, function(err, resp) {
+	err && console.log(err);
+	var obj = JSON.parse(resp.response);
+	var geoJson = toGeoJson.toGeoJson(obj);
+	shale_play.addData(geoJson);
+    });
+    corslite(shaleBasinUrl, function(err, resp) {
+	err && console.log(err);
+	var obj = JSON.parse(resp.response);
+	var geoJson = toGeoJson.toGeoJson(obj);
+	shale_basin.addData(geoJson);
+    });
 
     var retina = window.devicePixelRatio > 1.4,
     ret = retina ? "bm8/iabels-retina" : "bm8/labels";
     L.tileLayer(wriTiles, {styleId: "bm8/base", detectRetina: true}).addTo(map);
     L.tileLayer.wms("http://gis.wri.org/arcgis/services/Aqueduct/aqueduct_global/MapServer/WmsServer",{layers:'1',transparent:true,format:'image/png32',detectRetina:true}).addTo(map);
     L.tileLayer(wriTiles, {styleId: ret, detectRetina: true}).addTo(map);
-
 
     L.control.layers({},{
 	'Shale Basin': shale_basin.addTo(map),
@@ -164,5 +180,7 @@
 
     map.attributionControl
 	.addAttribution('<a href="http://www.mapbox.com"> Mapbox</a> | Data Sources <a href="http://www.wri.org"> &copy World Resources Institute</a> | Developer <a href="http://www.wri.org/profile/tianyi-luo"> Tianyi Luo</a>');
+    
+    window.addEventListener('resize',map.invalidateSize);
 
 })(document, window);
