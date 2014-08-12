@@ -117,17 +117,27 @@
 
     var retina = window.devicePixelRatio > 1.4,
     ret = retina ? "bm8/iabels-retina" : "bm8/labels";
-    L.tileLayer(wriTiles, {styleId: "bm8/base", detectRetina: true}).addTo(map);
-    L.tileLayer.wms("http://gis.wri.org/arcgis/services/Aqueduct/aqueduct_global/MapServer/WmsServer",{layers:'1',transparent:true,format:'image/png32',detectRetina:true}).addTo(map);
-    L.tileLayer(wriTiles, {styleId: ret, detectRetina: true}).addTo(map);
+    L.tileLayer(wriTiles, {styleId: "bm8/base", detectRetina: true, zIndex:0}).addTo(map);
 
-    L.control.layers({},{
+    L.tileLayer(wriTiles, {styleId: ret, detectRetina: true, zIndex:10}).addTo(map);
+    
+    var aqLayer = function(idx) {
+	return L.tileLayer.wms("http://gis.wri.org/arcgis/services/Aqueduct/aqueduct_global/MapServer/WmsServer",{layers:idx,transparent:true,format:'image/png32',detectRetina:true, zIndex:2});
+    };
+    
+    L.control.layers({
+	'Baseline water stress': aqLayer(1).addTo(map),
+	'Interannual variability': aqLayer(2),
+	'Seasonal variability': aqLayer(3),
+	'Drought severity': aqLayer(5),
+	'Groundwater stress': aqLayer(7),
+    },{
 	'Shale Basin': shale_basin.addTo(map),
 	'Shale Play': shale_play.addTo(map)
     },{
 	position: 'topright'
     },{
-	autoZIndex: true
+	autoZIndex: false
     }).addTo(map);
 
 
