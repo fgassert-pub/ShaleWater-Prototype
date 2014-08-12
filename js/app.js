@@ -191,6 +191,8 @@
     map.attributionControl
 	.addAttribution('<a href="http://www.mapbox.com"> Mapbox</a> | Data Sources <a href="http://www.wri.org"> &copy World Resources Institute</a> | Developer <a href="http://www.wri.org/profile/tianyi-luo"> Tianyi Luo</a>');
     
-    window.addEventListener('resize',map.invalidateSize);
+    window.addEventListener('resize',function(e){
+	window.setTimeout(map.invalidateSize(),100);
+    });
 
 })(document, window);
