@@ -127,7 +127,6 @@
     
     L.control.layers({
 	'Baseline water stress': aqLayer(1).addTo(map),
-	'Interannual variability': aqLayer(2),
 	'Seasonal variability': aqLayer(3),
 	'Drought severity': aqLayer(5),
 	'Groundwater stress': aqLayer(7),
@@ -192,7 +191,7 @@
 	.addAttribution('<a href="http://www.mapbox.com"> Mapbox</a> | Data Sources <a href="http://www.wri.org"> &copy World Resources Institute</a> | Developer <a href="http://www.wri.org/profile/tianyi-luo"> Tianyi Luo</a>');
     
     window.addEventListener('resize',function(e){
-	window.setTimeout(map.invalidateSize(),100);
+	window.setTimeout(map.invalidateSize,100);
     });
 
 })(document, window);
