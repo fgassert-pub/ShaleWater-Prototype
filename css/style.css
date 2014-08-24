@@ -28,6 +28,7 @@ body {
 h1 {
   font-size: 1.5em;
   line-height: 1.5em;
+  margin-bottom: 0;
 }
 h2 {
   font-size: 1.2em;
@@ -44,23 +45,28 @@ hr {
   background: #999;
 }
 .header {
+  position: relative;
   padding: 0 0.5em;
 }
-.logo-right {
+.logo-right {  
   float: right;
-  vertical-align: middle;
 }
 .logo-right-wri4c {
-  background: url("../img/wri_logo.png") center no-repeat;
-  background: -webkit-image-set(url("../img/wri_logo.png") 1x, url("../img/wri_logo@2x.png") 2x);
-  width: 375px;
-  height: 31px;
+  width: 150px;
+  vertical-align: middle;
+  padding: .75em;
 }
-.logo-right-wrismblack {
-  background: url("../img/WRI_sm_black.png") center no-repeat;
-  background: -webkit-image-set(url("../img/WRI_sm_black.png") 1x, url("../img/WRI_sm_black@2x.png") 2x);
+.logo-right-aq {
+  width: 200px;  
+  padding-top: 6px;
+  vertical-align: middle;
+}
+.logo-right-wrismwhite {
+  background: url("../img/WRI_sm_white.png") center no-repeat;
+  background: -webkit-image-set(url("../img/WRI_sm_white.png") 1x, url("../img/WRI_sm_white@2x.png") 2x);
   width: 44px;
   height: 44px;
+  opacity: .4;
 }
 #ra-nav {
   background: #000;
@@ -77,9 +83,13 @@ hr {
   color: #f0ab00;
   text-decoration: none;
 }
+
+.ra-large #ra-nav-container {
+  text-align: right;
+}
 .ra-large .nav-left {
-  float: right;
   padding: 0.25em 1em;
+  display: inline-block;
 }
 .ra-small #ra-nav {
   -moz-box-shadow: inset 0px 3px 2px -2px rgba(0,0,0,0.2);
@@ -95,6 +105,10 @@ hr {
 #ra-responsivemenu-btn-l {
   border-right: rgba(0,0,0,0.3) 1px solid;
 }
+#ra-panel-content {
+  padding: .5em;
+}
+
 #map {
   width: 100%;
   height: 100%;
@@ -128,3 +142,48 @@ hr {
   margin-right: 6px;
   opacity: 1;
 }
+
+em {
+    font-size: 1.6em;
+    font-style: normal;
+}
+a {
+    text-decoration: none;
+    color: #f0ab00;
+}
+p {
+    line-height: 1.5em;
+}
+
+#panelAbout,
+#panelReport,
+#panelData,
+#panelContact {
+    display: none;
+}
+
+.panelContact #panelContact,
+.panelAbout #panelAbout,
+.panelReport #panelReport,
+.panelData #panelData {
+    display: block;
+}
+
+#btnPanelClose {
+    float: right;
+    font-family: Arial;
+    font-size: 18px;
+    cursor: pointer;
+}
+#btnPanelClose::before {
+    content: '×';
+    padding: .25em;
+}
+
+#panelAbout p,
+#panelAbout li,
+#panelReport p,
+#panelReport li {
+    font-family: Georgia, serif;
+};
+

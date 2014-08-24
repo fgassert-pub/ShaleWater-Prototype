@@ -51,9 +51,6 @@ img {
   display: none !important;
 }
 #ra-panel-content {
-  height: inherit;
-  width: 284px;
-  float: left;
   overflow: auto;
 }
 /* ra-headmatter element contains the header, subheader, and nav
@@ -135,10 +132,10 @@ img {
 }
 /* full screen mode */
 .ra-fullscreen #ra-panel {
-  display: none;
+  display: none !important;
 }
 .ra-fullscreen #ra-headmatter {
-  display: none;
+  display: none !important;
 }
 /* subpanels */
 .ra-subpanel-l {

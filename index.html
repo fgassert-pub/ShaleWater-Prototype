@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Responsive App</title>
+  <title>Shale Resources and Water Risks</title>
   <meta charset='UTF-8'/>
   <meta name='viewport' content='width=device-width,initial-scale=1' />
   <link href='css/ra.css' rel='stylesheet' />
@@ -20,12 +20,20 @@
 	<div class='ra-hidewhensmall'>
 	  <!--Place header content here-->
 	  <div class='header clearfix'>
-	    <h1>Water for Shale
-	      <a href="http://wri.org">
-		<span class='logo-right logo-right-wri4c'
-		      title="Click to visit WRI main site" />
+	    <div class='logo-right'>
+	      <a href="http://wri.org/aqueduct">
+		<img src='img/aqueduct_logo_4c.svg'
+		     class='logo-right-aq'
+		     title="Click to visit Aqueduct site" />
 	      </a>
-	    </h1>
+	      <a href="http://wri.org">
+		<img src='img/wri_stacked_4c.svg'
+		     class='logo-right-wri4c'
+		     title="Click to visit WRI main site" />
+	      </a>
+	    </div>
+	    <h1>Shale Resources and Water Risks</h1>
+	    <div style='margin-bottom:.5em'>Explore water availability across shale gas and tight oil resources</div>
 	  </div>
 	  <!--End header content-->
 	</div>
@@ -33,8 +41,7 @@
 	  <div id='ra-responsivemenu-btn' class='ra-btn'></div>
 	  <!--Place small screen header html here-->
 	  <a href="http://wri.org" >
-	    <span class='logo-right logo-right-wrismblack'
-		  style='opacity:.4'
+	    <span class='logo-right logo-right-wrismwhite'
 		  title="Click to visit WRI main site" />
 	  </a>
 	  <!--End small screen header html-->
@@ -42,20 +49,17 @@
 	<div id='ra-nav'>
 	  <div id='ra-nav-container'>
 	    <!--Place navigation html here-->
-	    <a href='#' >
-	      <h3 class='nav-left'>Contact</h3>
+	    <a href='#' id='btnAbout'>
+	      <h3 class='nav-left'>About</h3>
 	    </a>
-	    <a href='#' >
-	      <h3 class='nav-left'>Water Risk Atlas</h3>
-	    </a>
-	    <a href='#' >
-	      <h3 class='nav-left'>Data</h3>
-	    </a>
-	    <a href='#' >
+	    <a href='#' id='btnReport'>
 	      <h3 class='nav-left'>Report</h3>
 	    </a>
-	    <a href='#' >
-	      <h3 class='nav-left'>About</h3>
+	    <a href='#' id='btnData'>
+	      <h3 class='nav-left'>Download data</h3>
+	    </a>
+	    <a href='#' id='btnContact'>
+	      <h3 class='nav-left'>Contact</h3>
 	    </a>
 	    <!--End navigation html-->
 	  </div>
@@ -64,11 +68,87 @@
       <div id='ra-main'>
 	<!--Place main content here-->
 	<div id='map'></div>
+	<div id='legend' class='info legend'>
+	  <h4 id='legend-title'>Baseline water stress</h4>
+	  <span id='legend-swatches'></span>
+	  <br>
+	  <h4>Shale resources</h4>
+	  <span id='legend-plays'></span>
+	  <span id='legend-basins'></span>
+	</div>
 	<!--End main content-->
       </div>
       <div id='ra-panel'>
 	<div id='ra-panel-content'>
 	  <!--Place panel content here-->
+	  <div id='btnPanelClose'></div>
+          <div id='panelAbout'>
+	    <h2>About</h2>
+            <p>
+              Innovation in hydraulic fracturing and horizontal drilling techniques is driving the rapid development of shale resources (shale gas, tight oil, or natural gas liquids) across the globe. Extracting shale resources requires large amounts of water for drilling and hydraulic fracturing. In most cases, these demands are met by freshwater, making companies developing shale significant users and managers of water at local and regional levels, often in competition with farms, households, and other industries.<br><br>Although experts agree that critical environmental risks and impacts are associated with developing shale, the risks and impacts specific to surface and groundwater availability have been thinly documented. With <a target='_blank' href='http://www.unconventionalenergyresources.com/viewer/index.html'>global shale geodatabase</a> and <a target='_blank' href='http://www.wri.org/our-work/project/aqueduct/aqueduct-atlas'>Aqueduct Water Risk Atlas</a>, the <a target='_blank' href='http://www.wri.org/'>World Resources Institute</a> (WRI) fills this gap, providing the first publicly available, global and country-specific information to help evaluate freshwater availability across shale resources worldwide. Specifically, this tool:
+            </p>
+            <ul>
+              <li>Identifies locations most in need of government oversight and robust corporate policies to properly manage freshwater availability in the context of shale development; and</li>
+              <li>Informs companies of potential business risks associated with freshwater availability, and builds the case for corporate water stewardship and early source water assessment.</li>
+            </ul>
+            <p>
+              While this tool examines water availability and shale resource development from a global perspective, it does not attempt to identify or address risks to water quality associated with the development of shale resources. Nor does it assess the performance of the oil and gas industry in managing water. Instead, it aims to share information that can help increase the dialog among water users from industry, government, and civil society in river basins worldwide. The accompanying <a target='_blank' href='#'>report</a> is available online providing detailed information to the underlying data, methodology, key findings, and recommendations.  
+            </p>
+          </div>
+          <div id='panelReport'>
+	    <h2>Report Highlights</h2>
+            <p>
+              Shale resources are unevenly distributed worldwide and, in many cases, not located where freshwater is abundant. This report reveals that lack of water availability could curtail shale development in many places around the world:
+            </p>
+            <ul>
+              <li><em>38%</em> of shale resources are in areas that are either arid or under high ot extremely high levels of water stress</li>
+              <li><em>19%</em> are in areas of high or extremely high seasonal variability; and</li>
+              <li><em>17%</em> are in locations exposed to high or extremely high drought severity</li>
+            </ul>
+            <p>
+              Read the full <a target='_blank' href='#'>report</a>.
+            </p>
+          </div>
+          
+          <div id='panelData'>
+	    <h2>Data</h2>
+            <a href='http://www.unconventionalenergyresources.com/viewer/index.html'>
+              <img src="img/layers5.png"
+                   alt="download_logo"
+                   title="Click to download shale data from West Virginia University">
+	    </a>
+	    <p>
+	      <a href='http://www.unconventionalenergyresources.com/viewer/index.html'>Download</a> the Global Shale Resources Geodatabase from West Virginia University.
+	    </p>
+            <a href='http://www.wri.org/resources/data-sets/aqueduct-global-maps-20'>
+              <img src="img/layers5.png"
+                   alt="download_logo"
+                   title="Click to download water risk data from Aqueduct">
+	    </a>
+	    <p>
+	      <a href='http://www.wri.org/resources/data-sets/aqueduct-global-maps-20'>Download</a> Aqueduct Global Water Risk Atlas.
+	    </p>
+          </div>
+          <div id='panelContact'>
+	    <h2>Contact</h2>
+            <a href='https://twitter.com/WRIAqueduct' target='_blank'>
+              <img src="img/twitter6.png"
+                   alt="twitter_logo">
+            </a>
+	    <p>
+              <b>Follow Aqueduct on Twitter</b><br>
+	      @WRIAqueduct
+	    </p>
+	    <a href='mailto:preig@wri.org?subject=Water risks to shale' 
+	       target='_top'>
+              <img src="img/mail59.png"
+                   alt="mail_logo">
+            </a>
+            <p>
+              <b>General Inquiries</b><br>
+              Paul Reig
+            </p>
+          </div>
 	  <!--End panel content-->
 	</div>
       </div>

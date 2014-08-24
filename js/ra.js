@@ -148,7 +148,9 @@ var ra = function(window, document) {
 	},
 	// check to see if the screen changed from small to large or vice versa
 	_checkScreenChange = function (force) {
-	    if (getWindowWidth() < config.minWidth) {
+	    if (screenSize() === full) {
+		_onScreenChange();
+	    } else if (getWindowWidth() < config.minWidth) {
 		if (screenSize() !== small) {
 		    container.className = small;
 		    _onScreenChange();
@@ -167,18 +169,18 @@ var ra = function(window, document) {
 		// set panel sizes
 		css(main, {width:'100%',left:0});
 		css(panel, {height:'100%'});
-		css(panelContent, {width: px(config.panelWidth)});
 		_hideNav();
+		_hidePanel();
+		currentPanel = 0;
 	    } else if (screenSize() === large) {
 		// set panel sizes
 		css(panel, {width: px(config.panelWidth)});
-		css(panelContent, {width: px(config.panelWidth)});
 		// reset screen view
 		_gotoX(0);
 	    } else if (screenSize() === full) {
 		// if the screen is now full
 		// set panel sizes
-		css(main, {height:'100%', width:'100%', left:'100%'});
+		css(main, {height:'100%', width:'100%', left:0});
 		// reset screen view
 		_gotoX(0);
 	    };  
@@ -190,7 +192,7 @@ var ra = function(window, document) {
 		h = getWindowHeight()-headMatter.offsetHeight;
 		w = getWindowWidth()-panel.offsetWidth;
 		css(panel, {height: px(h)});
-		css(main, {left: px(panel.offsetWidth), 'max-width': px(w), height: px(h)});
+		css(main, {left: px(panel.offsetWidth), maxWidth: px(w), height: px(h)});
 	    } else if (screenSize() === small) {
 		css(main,{height:px(getWindowHeight()-headMatter.offsetHeight)});
 	    };
@@ -282,6 +284,7 @@ var ra = function(window, document) {
 	this.toggleFullScreen = toggleFullScreen;
 	this.setOptions = setConfig;
 	this.getOptions = getConfig;
+	this.getCurrentPanel = function(){return currentPanel;};
 
 	// call setConfig and onResize to initialize display
 	setConfig(options);
