@@ -1,5 +1,5 @@
 
-(function (window, document) {
+(function () {
     'use strict';
     
     var 
@@ -232,7 +232,12 @@
 	    L.DomEvent.addListener(basinSwatch,'mouseout',function(e){
 		legendInfo.removeFrom(map);
 	    });
-	    
+	    // set legend title to name of baselayer
+	    map.on('baselayerchange', function(e) {
+		title.innerHTML = e.name;
+		baseDefinition = layerDefinitions[e.name];
+	    });
+
 	    return container;
 	};
 	legend.addTo(map);
@@ -253,18 +258,8 @@
 		.bringToBack();;
 	});
 	
-	// set legend title to name of baselayer
-	map.on('baselayerchange', function(e) {
-	    L.DomUtil.get('legend-title').innerHTML = e.name;
-	    baseDefinition = layerDefinitions[e.name];
-	});
 
 	L.control.scale().addTo(map);
-
-	L.DomEvent.addListener(window,'resize',function(e){
-	    // need to wait for css transition to finish on windows
-	    window.setTimeout(map.invalidateSize,260);
-	},false);
 
 	L.DomEvent.addListener(btnAbout,'click',function(e) {
 	    setPanel('panelAbout'); 
@@ -290,4 +285,4 @@
     };
     init();
 
-})(document, window);
+})();
