@@ -87,13 +87,12 @@
 
     highlightFeature = function(feature, style) {
 	feature.setStyle(style);
-	if (!L.Browser.ie && !L.Browser.opera)
-            feature.bringToBack();
     },
     
     btnAbout = L.DomUtil.get('btnAbout'),
     btnReport = L.DomUtil.get('btnReport'),
     btnData = L.DomUtil.get('btnData'),
+    btnRankings = L.DomUtil.get('btnRankings'),
     btnContact = L.DomUtil.get('btnContact'),
     btnClose = L.DomUtil.get('btnPanelClose'),
 
@@ -122,7 +121,7 @@
 	}).addTo(map),
 
 	labels = L.tileLayer(wriTiles, {
-	    styleId: retina ? "bm8/iabels-retina" : "bm8/labels", 
+	    styleId: retina ? "bm8/labels-retina" : "bm8/labels", 
 	    detectRetina: true, 
 	    zIndex: 10
 	}).addTo(map),
@@ -260,6 +259,10 @@
 	
 
 	L.control.scale().addTo(map);
+    
+	L.DomEvent.addListener(window,'resize',function(e){
+	    window.setTimeout(function(){map.invalidateSize()},260)
+	});
 
 	L.DomEvent.addListener(btnAbout,'click',function(e) {
 	    setPanel('panelAbout'); 
@@ -267,6 +270,10 @@
 	});
 	L.DomEvent.addListener(btnReport,'click',function(e) {
 	    setPanel('panelReport');
+	    L.DomEvent.stopPropagation(e);
+	});
+	L.DomEvent.addListener(btnRankings,'click',function(e) {
+	    setPanel('panelRankings');
 	    L.DomEvent.stopPropagation(e);
 	});
 	L.DomEvent.addListener(btnData,'click',function(e) {
