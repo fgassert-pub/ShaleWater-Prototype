@@ -159,6 +159,9 @@ a {
 p {
     line-height: 1.5em;
 }
+li {
+    padding-bottom: 0.5em;
+}
 
 #panelAbout,
 #panelReport,
@@ -192,59 +195,35 @@ p {
 #panelReport p,
 #panelReport li {
     font-family: Georgia, serif;
-};
+}
 
 .rankingAttributes {
-    font-family: 'Arial';
-    font-size: 0.7em;
+    font-size: 0.9em;
     color: white;
     font-weight: bold;
     background: #231F20;
 }
+
 .rankingData {
-    font-family: 'Arial';
     font-size: 0.8em;
     color: black;
 }
 .rankingLRisk {
-    font-family: 'Arial';
-    font-size: 0.8em;
-    color: black;
-    font-weight: bold;
     background-color: rgb(255,255,153)
 }
 .rankingLMRisk {
-    font-family: 'Arial';
-    font-size: 0.8em;
-    color: black;
-    font-weight: bold;
     background-color: rgb(255,230,0)
 }
 .rankingMHRisk {
-    font-family: 'Arial';
-    font-size: 0.8em;
-    color: black;
-    font-weight: bold;
     background-color: rgb(255,153,0)
 }
 .rankingHRisk {
-    font-family: 'Arial';
-    font-size: 0.8em;
-    color: black;
-    font-weight: bold;
     background-color: rgb(255,25,0)
 }
 .rankingEHRisk {
-    font-family: 'Arial';
-    font-size: 0.8em;
     color: white;
-    font-weight: bold;
     background-color: rgb(204,0,20)
 }
 .rankingALRisk {
-    font-family: 'Arial';
-    font-size: 0.8em;
-    color: black;
-    font-weight: bold;
     background-color: rgb(204,204,204)
 }
