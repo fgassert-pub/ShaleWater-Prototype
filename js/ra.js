@@ -130,7 +130,8 @@ var ra = function(window, document) {
 	// default config
 	config = { 
 	    minWidth:640, // minimum width for screen size to count as large
-	    panelWidth:284, // panel width
+	    panelWidthSm:284, // panel width on small screens
+	    panelWidthLg:284, // panel width on large screens
 	    panel1:false, // panel 1 on
 	},
 
@@ -167,14 +168,14 @@ var ra = function(window, document) {
 	_onScreenChange = function ( ) {
 	    if (screenSize() === small) {
 		// set panel sizes
-		css(main, {width:'100%',left:0});
-		css(panel, {height:'100%'});
+		css(panel, {height:'100%', width: px(config.panelWidthSm)});
+		css(main, {width:'100%',maxWidth:'100%',left:0});
 		_hideNav();
 		_hidePanel();
 		currentPanel = 0;
 	    } else if (screenSize() === large) {
 		// set panel sizes
-		css(panel, {width: px(config.panelWidth)});
+		css(panel, {width: px(config.panelWidthLg)});
 		// reset screen view
 		_gotoX(0);
 	    } else if (screenSize() === full) {
@@ -237,7 +238,7 @@ var ra = function(window, document) {
 		    _showPanel();
 		    _hideNav();
 		    if (screenSize() === small) {
-			_gotoX(config.panelWidth);
+			_gotoX(config.panelWidthSm);
 			removeC(cover, hide);
 		    } else resize();
 		};
