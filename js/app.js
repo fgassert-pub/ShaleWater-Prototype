@@ -114,14 +114,8 @@
 	
 	map = L.map('map',{keyboard: false, maxZoom: 8}).setView([16, 10], 3),
 
-	base = L.tileLayer(wriTiles, {
-	    styleId: "bm8/base",
-	    detectRetina: true, 
-	    zIndex: 0
-	}).addTo(map),
-
 	labels = L.tileLayer(wriTiles, {
-	    styleId: retina ? "bm8/labels-retina" : "bm8/labels", 
+	    styleId: retina ? "bm8/ilabels-retina" : "bm8/ilabels", 
 	    detectRetina: true, 
 	    zIndex: 10
 	}).addTo(map),
