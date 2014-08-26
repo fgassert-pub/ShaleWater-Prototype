@@ -20,7 +20,7 @@
     playStyleHighlight = {
         weight: 1.5,
         color: '#ffd700',
-        fillOpacity: .7
+        fillOpacity: .3
     },
 
     basinStyle = {
@@ -33,7 +33,7 @@
     basinStyleHighlight = {
         weight: 1.5,
         color: '#000',
-        fillOpacity: .7
+        fillOpacity: .3
     }, 
 
     legendLabels = ['Low',
@@ -112,7 +112,7 @@
     
 	var 
 	
-	map = L.map('map',{keyboard: false}).setView([16, 10], 3),
+	map = L.map('map',{keyboard: false, maxZoom: 8}).setView([16, 10], 3),
 
 	base = L.tileLayer(wriTiles, {
 	    styleId: "bm8/base",
