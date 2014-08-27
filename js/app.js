@@ -117,7 +117,8 @@
 	labels = L.tileLayer(wriTiles, {
 	    styleId: retina ? "bm8/ilabels-retina" : "bm8/ilabels", 
 	    detectRetina: true, 
-	    zIndex: 10
+	    zIndex: 10,
+	    attribution: 'Data from <a href="http://wri.org" target="_blank">World Resources Institute</a>, <a href="http://www.unconventionalenergyresources.com/" target="_blank">West Virginia University</a>'
 	}).addTo(map),
 	
 	shale_play = L.geoJson('', {

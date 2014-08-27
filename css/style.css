@@ -117,7 +117,7 @@ hr {
 #map {
   width: 100%;
   height: 100%;
-  background: #eee;
+  background: #666;
 }
 .info {
   padding: 6px 8px;
@@ -156,10 +156,15 @@ a {
     text-decoration: none;
     color: #f0ab00;
 }
-p {
+#ra-panel-content {
     line-height: 1.5em;
 }
+ul {
+    padding-left: 2em;
+    padding-right: 0.5em;
+}
 li {
+    list-style-type: square;
     padding-bottom: 0.5em;
 }
 
@@ -188,13 +193,6 @@ li {
 #btnPanelClose::before {
     content: '×';
     padding: .25em;
-}
-
-#panelAbout p,
-#panelAbout li,
-#panelReport p,
-#panelReport li {
-    font-family: Georgia, serif;
 }
 
 .rankingAttributes {
