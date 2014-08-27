@@ -124,6 +124,7 @@ hr {
 .info {
   padding: 6px 8px;
   font: 12px/14px Arial, Helvetica, sans-serif;
+  background: white; /*ie8*/
   background: rgba(255,255,255,0.9);
   box-shadow: 0 0 16px rgba(0,0,0,0.2);
   border-radius: 4px;
