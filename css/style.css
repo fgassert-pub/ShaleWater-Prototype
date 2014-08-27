@@ -61,20 +61,24 @@ hr {
   height: 53px;
   background: url("../img/wri_stacked_4c.png") no-repeat center;
   background: -webkit-image-set(url("../img/wri_stacked_4c.png") 1x, url("../img/wri_stacked_4c@2x.png") 2x);
-  padding: .75em;
+  padding: 0.5em;
+  display: inline-block;
 }
 .logo-right-aq {
   width: 200px;
   height: 26px;
   background: url("../img/aqueduct_logo_4c.png") no-repeat center;
   background: -webkit-image-set(url("../img/aqueduct_logo_4c.png") 1x, url("../img/aqueduct_logo_4c@2x.png") 2x);
-  padding-top: 6px;
+  padding: 0.5em;
+  margin-bottom: 8px;
+  display: inline-block;
 }
 .logo-wrihoriz {
   width: 250px;
   height: 21px;
   background: url("../img/wri_logo_horiz_4c.png") no-repeat center;
   background: -webkit-image-set(url("../img/wri_logo_horiz_4c.png") 1x, url("../img/wri_logo_horiz_4c@2x.png") 2x);
+  display: inline-block;
 }
 #ra-nav {
   background: #000;
