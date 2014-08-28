@@ -28,6 +28,7 @@ body {
 h1 {
   font-size: 1.5em;
   line-height: 1.5em;
+  margin-bottom: 0;
 }
 h2 {
   font-size: 1.2em;
@@ -44,23 +45,40 @@ hr {
   background: #999;
 }
 .header {
+  position: relative;
   padding: 0 0.5em;
 }
-.logo-right {
+.header-right {
   float: right;
-  vertical-align: middle;
+  color: #fff;
+  padding-right: .5em;
+}
+.logo-right {  
+  float: right;
 }
 .logo-right-wri4c {
-  background: url("../img/wri_logo.png") center no-repeat;
-  background: -webkit-image-set(url("../img/wri_logo.png") 1x, url("../img/wri_logo@2x.png") 2x);
-  width: 375px;
-  height: 31px;
+  width: 151px;
+  height: 53px;
+  background: url("../img/wri_stacked_4c.png") no-repeat center;
+  background: -webkit-image-set(url("../img/wri_stacked_4c.png") 1x, url("../img/wri_stacked_4c@2x.png") 2x) no-repeat center;
+  padding: 0.5em;
+  display: inline-block;
 }
-.logo-right-wrismblack {
-  background: url("../img/WRI_sm_black.png") center no-repeat;
-  background: -webkit-image-set(url("../img/WRI_sm_black.png") 1x, url("../img/WRI_sm_black@2x.png") 2x);
-  width: 44px;
-  height: 44px;
+.logo-right-aq {
+  width: 200px;
+  height: 26px;
+  background: url("../img/aqueduct_logo_4c.png") no-repeat center;
+  background: -webkit-image-set(url("../img/aqueduct_logo_4c.png") 1x, url("../img/aqueduct_logo_4c@2x.png") 2x) no-repeat center;
+  padding: 0.5em;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+.logo-wrihoriz {
+  width: 250px;
+  height: 21px;
+  background: url("../img/wri_logo_horiz_4c.png") no-repeat center;
+  background: -webkit-image-set(url("../img/wri_logo_horiz_4c.png") 1x, url("../img/wri_logo_horiz_4c@2x.png") 2x) no-repeat center;
+  display: inline-block;
 }
 #ra-nav {
   background: #000;
@@ -77,13 +95,17 @@ hr {
   color: #f0ab00;
   text-decoration: none;
 }
+
+.ra-large #ra-nav-container {
+  text-align: right;
+}
 .ra-large .nav-left {
-  float: right;
   padding: 0.25em 1em;
+  display: inline-block;
 }
 .ra-small #ra-nav {
-  -moz-box-shadow: inset 0px 3px 2px -2px rgba(0,0,0,0.2);
-  box-shadow: inset 0px 3px 2px -2px rgba(0,0,0,0.2);
+  -moz-box-shadow: inset 0px 3px 2px -2px rgba(255,255,255,0.2);
+  box-shadow: inset 0px 3px 2px -2px rgba(255,255,255,0.2);
 }
 .ra-small .nav-left {
   width: auto;
@@ -95,14 +117,19 @@ hr {
 #ra-responsivemenu-btn-l {
   border-right: rgba(0,0,0,0.3) 1px solid;
 }
+#ra-panel-content {
+  padding: .5em;
+}
+
 #map {
   width: 100%;
   height: 100%;
-  background: #333;
+  background: #666;
 }
 .info {
   padding: 6px 8px;
-  font: 14px/16px Arial, Helvetica, sans-serif;
+  font: 12px/14px Arial, Helvetica, sans-serif;
+  background: white; /*ie8*/
   background: rgba(255,255,255,0.9);
   box-shadow: 0 0 16px rgba(0,0,0,0.2);
   border-radius: 4px;
@@ -127,4 +154,82 @@ hr {
   float: left;
   margin-right: 6px;
   opacity: 1;
+}
+
+em {
+    font-size: 1.6em;
+    font-style: normal;
+}
+a {
+    text-decoration: none;
+    color: #f0ab00;
+}
+#ra-panel-content {
+    line-height: 1.5em;
+}
+ul {
+    padding-left: 2em;
+    padding-right: 0.5em;
+}
+li {
+    list-style-type: square;
+    padding-bottom: 0.5em;
+}
+
+#panelAbout,
+#panelReport,
+#panelRankings,
+#panelData,
+#panelContact{
+    display: none;
+}
+
+.panelContact #panelContact,
+.panelAbout #panelAbout,
+.panelRankings #panelRankings,
+.panelReport #panelReport,
+.panelData #panelData {
+    display: block;
+}
+
+#btnPanelClose {
+    float: right;
+    font-family: Arial;
+    font-size: 18px;
+    cursor: pointer;
+}
+#btnPanelClose::before {
+    content: '×';
+    padding: .25em;
+}
+
+.rankingAttributes {
+    font-size: 0.9em;
+    color: white;
+    font-weight: bold;
+    background: #231F20;
+}
+
+.rankingData {
+    font-size: 0.8em;
+    color: black;
+}
+.rankingLRisk {
+    background-color: rgb(255,255,153)
+}
+.rankingLMRisk {
+    background-color: rgb(255,230,0)
+}
+.rankingMHRisk {
+    background-color: rgb(255,153,0)
+}
+.rankingHRisk {
+    background-color: rgb(255,25,0)
+}
+.rankingEHRisk {
+    color: white;
+    background-color: rgb(204,0,20)
+}
+.rankingALRisk {
+    background-color: rgb(204,204,204)
 }

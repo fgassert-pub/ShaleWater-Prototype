@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Responsive App</title>
+  <title>Shale Resources and Water Risks</title>
   <meta charset='UTF-8'/>
   <meta name='viewport' content='width=device-width,initial-scale=1' />
   <link href='css/ra.css' rel='stylesheet' />
@@ -11,7 +11,8 @@
     <![endif]-->
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+  <script src="js/corslite.js"></script>
+  <script src="js/jsonConverters.js"></script>
 </head>
 <body>
     <div id='ra-container' class='ra-large'>
@@ -19,42 +20,50 @@
 	<div class='ra-hidewhensmall'>
 	  <!--Place header content here-->
 	  <div class='header clearfix'>
-	    <h1>Water for Shale
-	      <a href="http://wri.org">
-		<span class='logo-right logo-right-wri4c'
-		      title="Click to visit WRI main site" />
+	    <div class='logo-right'>
+	      <a href="http://wri.org/aqueduct">
+		<span class='logo-right-aq'
+		      title="Click to visit Aqueduct site"></span>
 	      </a>
-	    </h1>
+	      <a href="http://wri.org">
+		<span class='logo-right-wri4c'
+		      title="Click to visit WRI main site"></span>
+	      </a>
+	    </div>
+	    <h1>Shale Resources and Water Risks</h1>
+	    <div style='margin-bottom:.5em'>Explore water availability across shale gas and tight oil resources</div>
 	  </div>
 	  <!--End header content-->
 	</div>
 	<div id='ra-responsivemenu' class='ra-hidewhenlarge clearfix'>
 	  <div id='ra-responsivemenu-btn' class='ra-btn'></div>
 	  <!--Place small screen header html here-->
-	  <a href="http://wri.org" >
-	    <span class='logo-right logo-right-wrismblack'
-		  style='opacity:.4'
-		  title="Click to visit WRI main site" />
-	  </a>
+	    <h3 class='header-right'
+		title="Click to visit WRI main site">Shale Resources and Water Risks</h3>
 	  <!--End small screen header html-->
 	</div>
 	<div id='ra-nav'>
 	  <div id='ra-nav-container'>
 	    <!--Place navigation html here-->
-	    <a href='#' >
-	      <h3 class='nav-left'>Contact</h3>
+	    <a href='#' id='btnAbout'>
+	      <h3 class='nav-left'>About</h3>
 	    </a>
-	    <a href='#' >
-	      <h3 class='nav-left'>Water Risk Atlas</h3>
-	    </a>
-	    <a href='#' >
-	      <h3 class='nav-left'>Data</h3>
-	    </a>
-	    <a href='#' >
+	    <a href='#' id='btnReport'>
 	      <h3 class='nav-left'>Report</h3>
 	    </a>
-	    <a href='#' >
-	      <h3 class='nav-left'>About</h3>
+	    <a href='#' id='btnRankings'>
+	      <h3 class='nav-left'>Countries</h3>
+	    </a>
+	    <a href='#' id='btnData'>
+	      <h3 class='nav-left'>Download Data</h3>
+	    </a>
+	    <a href='#' id='btnContact'>
+	      <h3 class='nav-left'>Contact</h3>
+	    </a>
+	    <a href='http://wri.org'>
+	      <h3 class='nav-left ra-hidewhenlarge'>
+	      <span class='logo-wrihoriz'
+		    alt="WRI Logo"></span></h3>
 	    </a>
 	    <!--End navigation html-->
 	  </div>
@@ -63,11 +72,281 @@
       <div id='ra-main'>
 	<!--Place main content here-->
 	<div id='map'></div>
+	<div id='legend' class='info legend'>
+	  <h4 id='legend-title'>Baseline water stress</h4>
+	  <span id='legend-swatches'></span>
+	  <br>
+	  <h4>Shale resources</h4>
+	  <span id='legend-plays'></span>
+	  <span id='legend-basins'></span>
+	</div>
 	<!--End main content-->
       </div>
       <div id='ra-panel'>
 	<div id='ra-panel-content'>
 	  <!--Place panel content here-->
+	  <div id='btnPanelClose'></div>
+          <div id='panelAbout'>
+	    <h2>About</h2>
+            <p>Dozens of countries around the world are deciding whether or not to develop their shale gas and tight oil resources. However, extracting these energy sources poses environmental risks, especially to water. 
+            </p>
+            <p>Drilling and hydraulic fracturing requires up to 25 million liters of water per well, meaning shale resources can be hard to develop where freshwater is hard to find.
+            </p>
+            <p>The risks and impacts specific to surface and groundwater availability have been thinly documented to date. This tool and the associated <a href='http://www.wri.org/publication/water-for-shale' target='_blank'>report</a>:
+            </p>
+            <ul>
+              <li>Identify priority locations where companies and governments can evaluate and sustainably manage freshwater if shale is developed.</li>
+              <li>Reveal potential business risks associated with freshwater availability to companies, and building the case for corporate water stewardship and early source-water assessment.</li>
+            </ul>
+	    <h3>Scope</h3>
+            <p>
+              This tool shares information that can create dialog among water users from industry, government, and civil society in river basins worldwide. It does not attempt to identify risks to water quality from shale resource development, nor does it assess the oil and gas industry’s water management practices.
+            </p><br>
+	    <h3>Definitions</h3>
+	    <small>
+	    <ul>
+	      <li><b>Baseline water stress</b>: The ratio of total water withdrawals to available renewable supply in an area. In high-stress areas, 40 percent or more of the available supply is withdrawn every year. In extremely high-stress areas, that number goes up to 80 percent or higher. A higher percentage means more water users are competing for limited supplies. See the high and extremely high-stress areas highlighted in red and dark red on the maps. For more detailed information, please see Aqueduct’s Global Maps 2.0 <a href='http://www.wri.org/publication/aqueduct-global-maps-20' target='_blank'>metadata document</a>.</li>
+	      <li><b>Hydraulic fracturing</b>: A method of extraction for shale gas and tight oil resources. Fluid is pumped at high pressure down a well to create cracks in low-permeability geological formations. Natural gas and oil then flows from the cracks back into the well.</li>
+	      <li><b>Shale play</b>: Part of a shale basin that can be commercially extracted.</li>
+	      <li><b>Shale gas</b>: Natural gas deposit found in shale reservoirs, which are between ten and many thousands of times less permeable than conventional natural gas reservoirs.</li>
+	      <li><b>Tight oil</b>: Oil trapped in fine-grained sedimentary rocks with extremely low permeability, such as shale, sandstone, or carbonate</li>
+	      <li><b>Technically recoverable resource</b>: Shale oil or gas deposit that can be extracted with current technology, but does not consider economic viability. </li>
+	    </ul>
+	    </small>
+	  </div>
+          <div id='panelReport'>
+	    <h2>Report Highlights</h2>
+	    <p><a href='http://www.wri.org/publication/water-for-shale' target='_blank'><b>Read</b>:</a> <i>Global Shale Gas Development: Water Availability and Business Risks</i></p>
+	    <p>
+	      <i>Global Shale Gas Development</i> analyzes water availability across all potentially commercial shale resources worldwide, and finds that limited freshwater supplies could pose challenges to shale resource development on every continent.
+	    </p>
+	    <ul>
+	      <li>
+		<em>38</em> percent of the world's shale resources face high to extremely high water stress or arid conditions.
+	      </li>
+	      <li>
+		<em>386</em> million people live on land above shale plays - increased competition for water and public concern over hydraulic fracturing is more likely in densely populated areas.
+	      </li>
+	    </ul>
+	    <p>WRI assessed water stress in the 20 countries with the largest shale resources. Shale plays in 40% of those countries face high to extremely high water stress: China, Algeria, Mexico, South Africa, Libya, Pakistan, Egypt, India.
+	    </p>
+	    <p>WRI also analyzed water availability for each shale play in 11 countries already developing – or more likely to develop – shale resources: Algeria, Argentina, Australia, Canada, China, Mexico, Poland, Saudi Arabia, South Africa, the United Kingdom, and the United States.</p>
+	    <ul>
+	      <li>
+		<b>China</b> is shale rich, but water poor. It has the world's largest commercially viable shale reserves, but over 60 percent of them face high water stress or arid conditions. 
+	      </li>
+	      <li>
+		<b>Argentina</b> is shale rich and less water stressed. It has the world's second-largest technically recoverable gas reserves, but 71% of resources face low to medium stress.
+	      </li>
+	      <li>
+		The <b>United Kingdom</b>, is Europe's third-largest natural gas producer, but is also densely populated, and 34% of resources face high water stress or arid conditions.
+	      </li>
+	    </ul>
+	    <h3>Included in the Report</h3>
+	    <p>Six indicators and associated business risks for shale development: Water stress, water-supply variation among months of the year, drought severity, groundwater depletion rates, largest water user, population density, and depth of shale reserve.
+	    </p>
+	    <h3>Data Sources</h3>
+	    <ul>
+	      <li><a href='http://www.unconventionalenergyresources.com/viewer/index.html' target='_blank'>Unconventional Hydrocarbons Resources</a> - West Virginia University and the National Energy Technology Laboratory</li>
+	      <li><a href='http://wri.org/aqueduct' target='_blank'>Aqueduct Water Risk Atlas</a> - World Resources Institute</li>
+	    </ul>
+	    <h3>Reccomendations</h3>
+	    <p>Governments, companies, and civil society can help protect water security while minimizing business risks by:</p>
+	    <ul>
+	      <li>Conducting water risk assessments to understand local water variability and reduce business risk</li>
+	      <li>Increasing transparency and engaging with local regulators, communities, and industry to minimize uncertainty</li>
+	      <li>Ensuring adequate water governance to guarantee water security and reduce regulatory and reputational risks</li>
+	      <li>Minimizing freshwater use and engaging in corporate water stewardship to reduce impacts on water availability</li>
+	    </ul>
+	    <p>
+	      Read the full <a target="_blank" href="http://www.wri.org/publication/water-for-shale">report</a>.
+	    </p>
+          </div>
+          <div id='panelRankings'>
+	    <h2>Countries</h2>
+	    <p>
+Eight of the top 20 countries with the largest shale gas <i>technically recoverable resources</i> (TRR) face arid conditions or an average of high to extremely high baseline water stress where the shale is located. China, Mexico, and South Africa stand out, ranking very highly based on the size of their resources and exposure to baseline water stress.
+	    </p>
+	    <table class='rankingData'>
+	      <tr class='rankingAttributes'>
+		<td></td>
+		<td>Country</td>
+		<td>Estimated resources (trillion cubic feet)</td>
+		<td>Average water stress over shale play area</td>
+	      </tr>
+	      <tr>
+		<td>1</td>
+		<td >China</td>
+		<td >1,115</td>
+		<td class='rankingHRisk'>High</td>
+	      </tr>
+	      <tr>
+		<td >2</td>
+		<td >Argentina</td>
+		<td >802</td>
+		<td class='rankingLMRisk'>Low to Medium</td>
+	      </tr>
+	      <tr>
+		<td >3</td>
+		<td >Algeria</td>
+		<td >707</td>
+		<td class='rankingALRisk'>Arid & Low Water Use</td>
+	      </tr>
+	      <tr>
+		<td >4</td>
+		<td >Canada</td>
+		<td >573</td>
+		<td class='rankingLMRisk'>Low to Medium</td>
+	      </tr>
+	      <tr>
+		<td >5</td>
+		<td >United States</td>
+		<td >567</td>
+		<td class='rankingMHRisk'>Medium to High</td>
+	      </tr>
+	      <tr>
+		<td >6</td>
+		<td >Mexico</td>
+		<td >545</td>
+		<td class='rankingHRisk'>High</td>
+	      </tr>
+	      <tr>
+		<td >7</td>
+		<td >Australia</td>
+		<td >437</td>
+
+		<td class='rankingLRisk'>Low</td>
+	      </tr>
+	      <tr>
+		<td >8</td>
+		<td >South Africa</td>
+		<td >390</td>
+
+		<td class='rankingHRisk'>High</td>
+	      </tr>
+	      <tr>
+		<td >9</td>
+		<td >Russian Federation</td>
+		<td >287</td>
+
+		<td class='rankingLRisk'>Low</td>
+	      </tr>
+	      <tr>
+		<td >10</td>
+		<td >Brazil</td>
+		<td >245</td>
+
+		<td class='rankingLRisk'>Low</td>
+	      </tr>
+	      <tr>
+		<td >11</td>
+		<td >Venezuela</td>
+		<td >167</td>
+
+		<td class='rankingLRisk'>Low</td>
+	      </tr>
+	      <tr>
+		<td >12</td>
+		<td >Poland</td>
+		<td >148</td>
+
+		<td class='rankingLMRisk'>Low to Medium</td>
+	      </tr>
+	      <tr>
+		<td >13</td>
+		<td >France</td>
+		<td >137</td>
+		<td class='rankingLMRisk'>Low to Medium</td>
+	      </tr>
+	      <tr>
+		<td >14</td>
+		<td >Ukraine</td>
+		<td >128</td>
+
+		<td class='rankingLMRisk'>Low to Medium</td>
+	      </tr>
+	      <tr>
+		<td >15</td>
+		<td >Libya</td>
+		<td >122</td>
+
+		<td class='rankingALRisk'>Arid & Low Water Use</td>
+	      </tr>
+	      <tr>
+		<td >16</td>
+		<td >Pakistan</td>
+		<td >105</td>
+
+		<td class='rankingEHRisk'>Extremely High</td>
+	      </tr>
+	      <tr>
+		<td >17</td>
+		<td >Egypt, Arab Rep.</td>
+		<td >100</td>
+
+		<td class='rankingALRisk'>Arid & Low Water Use</td>
+	      </tr>
+	      <tr>
+		<td >18</td>
+		<td >India</td>
+		<td >96</td>
+
+		<td class='rankingHRisk'>High</td>
+	      </tr>
+	      <tr>
+		<td >19</td>
+		<td >Paraguay</td>
+		<td >75</td>
+
+		<td class='rankingMHRisk'>Medium to High</td>
+	      </tr>
+	      <tr>
+		<td >20</td>
+		<td >Colombia</td>
+		<td >55</td>
+
+		<td class='rankingLRisk'>Low</td>
+	      </tr>
+	    </table>
+          </div>
+          <div id='panelData'>
+	    <h2>Data</h2>
+            <a href='http://www.unconventionalenergyresources.com/viewer/index.html'>
+              <img src="img/layers5.png"
+                   alt="download_logo"
+                   title="Click to download shale data from West Virginia University">
+	    </a>
+	    <p>
+	      <a href='http://www.unconventionalenergyresources.com/viewer/index.html'>Download</a> the Global Shale Resources Geodatabase from West Virginia University.
+	    </p>
+            <a href='http://www.wri.org/resources/data-sets/aqueduct-global-maps-20'>
+              <img src="img/layers5.png"
+                   alt="download_logo"
+                   title="Click to download water risk data from Aqueduct">
+	    </a>
+	    <p>
+	      <a href='http://www.wri.org/resources/data-sets/aqueduct-global-maps-20'>Download</a> Aqueduct Global Water Risk Atlas.
+	    </p>
+          </div>
+          <div id='panelContact'>
+	    <h2>Contact</h2>
+            <a href='https://twitter.com/WRIAqueduct' target='_blank'>
+              <img src="img/twitter6.png"
+                   alt="twitter_logo">
+            </a>
+	    <p>
+              <b>Follow Aqueduct on Twitter</b><br>
+	      @WRIAqueduct
+	    </p>
+	    <a href='mailto:preig@wri.org?subject=Water risks to shale' 
+	       target='_top'>
+              <img src="img/mail59.png"
+                   alt="mail_logo">
+            </a>
+            <p>
+              <b>General Inquiries</b><br>
+            </p>
+          </div>
 	  <!--End panel content-->
 	</div>
       </div>
@@ -75,7 +354,7 @@
     </div>
     <!--Initialize responsive app framework-->
     <script src='js/ra.js'></script>
-    <script>ra = new ra({});</script>
+    <script>ra = new ra({panelWidthLg:320});</script>
     <!--Initialize application-->
     <script src='js/app.js'></script>
 </body>
